@@ -13,17 +13,8 @@ const decisionRoutes = require("./routes/decision");
 
 const app = express();
 
-// CORS Configuration
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://logi-mind-ai-f2wi.vercel.app",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+// Allow all origins (for hackathon/demo)
+app.use(cors());
 
 app.use(express.json());
 
@@ -31,7 +22,13 @@ app.get("/", (req, res) => {
   res.send("🚀 LogiMind AI Backend Running");
 });
 
-// Routes
+app.get("/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Backend Running",
+  });
+});
+
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/shipments", shipmentRoutes);
 app.use("/api/fleet", fleetRoutes);
@@ -39,15 +36,6 @@ app.use("/api/warehouses", warehouseRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/ml", mlRoutes);
 app.use("/api/decision", decisionRoutes);
-
-// Health Check
-app.get("/health", (req, res) => {
-  res.json({
-    success: true,
-    status: "OK",
-    message: "LogiMind AI Backend Running",
-  });
-});
 
 const PORT = process.env.PORT || 5000;
 
