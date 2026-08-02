@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
       health: row.health,
       status: row.status,
       route: `${row.origin} → ${row.destination}`,
-      odometer: `${Math.floor(Math.random() * 200000 + 50000)} km`,
+      odometer: `${row.odometer} km`,
       risk: row.risk,
     }));
 

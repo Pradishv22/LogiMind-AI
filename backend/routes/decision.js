@@ -40,7 +40,7 @@ function runEngine(scenario) {
   const pythonExecutable = process.env.PYTHON_BIN || "python";
   return new Promise((resolve, reject) => {
     const args = scenario ? [enginePath, scenario] : [enginePath];
-    execFile(pythonExecutable, args, (error, stdout, stderr) => {
+    execFile(pythonExecutable, args, { timeout: 30_000, maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
       if (error) return reject(new Error(stderr || error.message));
       try {
         return resolve(JSON.parse(stdout));
